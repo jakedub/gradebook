@@ -2,9 +2,11 @@ require 'csv'
 
 def print_gradebook(filename)
  grade_book = CSV.read("input1.csv", headers:true).each do |grade|
+   project = grade.drop(1)
+ end
    grade_book.each do |row|
-     student.drop(0)
-     grade.drop(1)
+     student = row.drop(0)
+     grade = row.drop(1).to_i
      grade_hash[student] = grade
    end
 
@@ -24,6 +26,7 @@ end
 
 def assignment_scores(grade_hash, assignment_num)
     as = grade_hash.map{|key, value| grade_hash[key] [assignment_num -1]}
+  end
 
 def assignment_scores_average(grade_hash, assignment_num)
     as = grade_hash.map{|key, value| grade_hash[key] [assignment_num -1]}
@@ -37,6 +40,11 @@ end
 def class_average(grade_hash)
   grades = grade_hash.values.flatten
   apply_average(grades)
+end
+
+def avg_by_student(grade_hash, student)
+  single = grade_hash[student]
+  apply_average(single)
 end
 
 def letter(score)
@@ -53,6 +61,14 @@ def letter(score)
   end
 end
 
+puts "Average by Student:"
+
+puts "#{project}: #{assignment_scores_average} #{letter(assignment_scores_average)}"
+
+puts "Average by Assignment:"
+puts "#{student:} #{avg_by_student} #{letter(avg_by_student)}"
+
+puts "Class Average: #{class_average}"
 
 if __FILE__ == $0
   filename = $ARGV[0]
